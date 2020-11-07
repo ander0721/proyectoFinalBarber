@@ -1,0 +1,24 @@
+.icon-box-style-02 .color-primary .icon {
+    fill: #ce5c5c;
+    stroke: #ce5c5c;
+}
+
+.btn-dark {
+    color: #fff;
+    background: #ce5c5c -webkit-gradient(linear,left top,left bottom,from(#ce5c5c),to(#ce5c5c)) repeat-x;
+    background: #ce5c5c linear-gradient(180deg,#ce5c5c,#ce5c5c) repeat-x;
+    border-color: #ce5c5c;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+}
+
+.btn-success {
+    color: #fff;
+    background: #ce5c5c -webkit-gradient(linear,left top,left bottom,from(#ce5c5c),to(#ce5c5c)) repeat-x;
+    background: #ce5c5c linear-gradient(180deg,#ce5c5c,#ce5c5c) repeat-x;
+    border-color: #ce5c5c;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+}
