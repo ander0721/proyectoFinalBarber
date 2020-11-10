@@ -49,7 +49,6 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                     <th>Propietario</th>
                     <th>Teléfono</th>
                     <th>Horario</th>
-                    <th>Usuario</th>
                     <th width="1px">Acciones</th>
                     </tr>
                 </thead>
@@ -141,7 +140,6 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
             {data: 'propietario', name: 'propietario'},
             {data: 'telefono', name: 'telefono'},
             {data: 'horario', name: 'horario'},
-            {data: 'user_id', name:'user_id'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
 

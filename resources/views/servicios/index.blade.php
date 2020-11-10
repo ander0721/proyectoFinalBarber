@@ -41,7 +41,7 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
                 <tr>
                     <th>Id</th>
                     <th>Nombre servicio</th>
-                    <th>Precio servicio</th>
+                 
                     <th width="2px">Acciones</th>
                 </tr>
                 </thead>
@@ -72,11 +72,10 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
                             </div>
 
                             <h6>Barberia</h6>   
-                     <select name="nombreB" class="form-control form-control-lg"
-                        id="nombreB">
+                     <select name="nombreB" class="form-control form-control-lg">
                         <option >Selecione barberia</option>
                         @foreach ($barberias as $barberia)
-                        <option value="{{$barberia->nombreB}}">{{$barberia->nombreB}}</option>  
+                        <option id="nombreB" value="{{$barberia->nombreB}}">{{$barberia->nombreB}}</option>  
                         @endforeach
                     </select>
 
@@ -115,7 +114,6 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nombreS', name: 'nombreS'},
-            {data: 'precio', name: 'precio'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
 
@@ -170,6 +168,7 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
           $('#servicio_id').val(data.idS);
           $('#nombreS').val(data.nombreS);
           $('#precio').val(data.precio);
+          $('#nombreB').val(data.nombreB);
       })
 
 
@@ -194,7 +193,6 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
           },
           error: function (data) {
               console.log('Error:', data);
-              $('#saveBtn').html('No se guardo correctamente, dato duplicado', data);
           }
       });
     });

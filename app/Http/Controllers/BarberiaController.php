@@ -17,7 +17,7 @@ class BarberiaController extends Controller
             $barberia = Barberia::all();
 
             $user_id = auth()->id();
-            $data = Barberia::all()->where($user_id = 'user_id' );
+            $data = Barberia::all()->where('user_id', '=' ,$user_id );
 
             return Datatables::of($data)
                     ->addIndexColumn()

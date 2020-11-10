@@ -13,7 +13,7 @@ class Marca extends Model
     protected $fillable = ['nombreM'];
 
     public function producto(){
-        return $this->belongsTo('App\Producto', 'idP');
+        return $this->hasMany('App\Producto', 'idP');
     }
     
 }

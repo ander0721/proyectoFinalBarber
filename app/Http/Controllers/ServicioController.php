@@ -19,7 +19,7 @@ class ServicioController extends Controller
      public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Servicio::all();
+            $data = Servicio::with('barberias')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -38,15 +38,26 @@ class ServicioController extends Controller
                        
                             return $btn;
                     })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                     ->rawColumns(['action'])
+                     ->make(true);
         }
 
-        $barberias = Barberia::all();
-      
+        $user_id = auth()->id();
+        $barberias = Barberia::all()->where('user_id', '=' ,$user_id );
+
         return view('servicios.index')->with('barberias',$barberias);
     }
 
+    /*************************** 
+    public function mostrar(){
+        if(Auth::check()){
+            return view("aut.inicio");
+        }else{
+            return redirect('login');
+        }
+
+     }
+     */
     /**
      * Store a newly created resource in storage.
      *
@@ -55,18 +66,17 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {                                    
-
-                                                                                                          
+        $user = auth()->id();
+        $nombreM = $request->input("nombreB");                                                                              
+        $barberia = Barberia::all()->where("nombreB", '=', $nombreM);                                                                   
         $servicio = Servicio::updateOrCreate(['idS' => $request->servicio_id]);
-
-        
         $servicio->nombreS = $request->input("nombreS");
         $servicio->precio = $request->input("precio");
-        $barberia = Barberia::updateOrCreate(['nombreB'=> $request['nombreB']]);
-        $barberia->save();
         $servicio->save();
+        $servicio->asignarBarberia($barberia);
+      
    
-        return response()->json(['success'=>'Item saved successfully.']);
+        return response()->json();
     }
 
 

@@ -34,6 +34,6 @@ class Producto extends Model
     }
     
     public function marcas(){
-        return $this->hasMany('App\Marca', 'idM');
+        return $this->belongsTo('App\Marca', 'idM');
     }
 }

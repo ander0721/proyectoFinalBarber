@@ -86,10 +86,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                             <div class="col-sm-offset-2 col-sm-10">
                              <button type="submit" class="btn btn-guardar btn-sm" id="saveBtn" value="create">Guardar
                              </button>
-                             <button class="btn btn-success btn-sm" type="submit" >Guardar
-                             </button>
-                             <button type="button" class="btn btn-outline-primary">Primary</button>$use
-                            </div>
+                              </div>
                         </form>
                     </div>
                 </div>

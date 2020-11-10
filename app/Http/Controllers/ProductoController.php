@@ -36,15 +36,30 @@ class ProductoController extends Controller
                             return $btn;
                     })
                     ->addColumn('marca', function(){
-                        
-                        $marca = Producto::find(4)->marcas->flatten()->pluck('nombreM');
+                       // $marca_id = App\Produc::with('marca_id');
+                        //$marcas = App\Marca::with()->where($marca_id,'=','idM');
+                        //$marca= Producto::with('nombreM')->with("addresses.city")->with("tipo_documento")->get();
+                       
+                        $marca = Producto::with('marcas')->where('marca_id','=','idM')->get();
+                        //
+                        //$marca = Producto::find(1)->marcas()->where('nombreM', 'ego')->first()->nombreM;
+                        //foreach($marca_id as $marca){
+
+                           // $marca->marca_id;
+                           // $marca->marcas->where('idM','=',$marca)->first();
+                            //$marcas->marcas()->where('nombreM', 'sabital')->first()->nombreM;
+                            //$marca->marcas->flatten()->pluck('nombreM');
+                            //$barberia = Barberia::where('nombreB', 'LIKE', "%$marca_id%")->get();
+
+
+                        //}
+                       //$marca = marca::find('idP')->marcas->flatten()->pluck('nombreM');
                         //$marca = Marca::all()->where('idM', '=',1);
 
                         return $marca;
 
                     })
                     ->rawColumns(['marca'])
-                    
                     ->rawColumns(['action'])
                     ->make(true);
         }
