@@ -16,7 +16,7 @@ class ComentarioController extends Controller
     public function index()
     {       
         $comentarios = Comentario::paginate(5);
-        return view ('comentario.index')
+        return view ('posts.index')
         ->with("comentarios" ,$comentarios);
     }
 
@@ -45,6 +45,36 @@ class ComentarioController extends Controller
 
         return redirect()->route('comentarios.index')
         ->with("exito" , "el comentario fue registrado correctamente");
+    }
+
+    public function like(): JsonResponse
+    {
+        $comentario = Comentario::find(request()->id);
+
+        if ($comentario->isLikedByLoggedInUser()) {
+            $res = Like::where([
+                'user_id' => auth()->user()->id,
+                'comentario_idC' => request()->id
+            ])->delete();
+
+            if ($res) {
+                return response()->json([
+                    'count' => Comentario::find(request()->id)->likes->count()
+                ]);
+            }
+
+        } else {
+            $like = new Like();
+
+            $like->user_id = auth()->user()->id;
+            $like->comentario_idC = request()->id;
+
+            $like->save();
+
+            return response()->json([
+                'count' => Comentario::find(request()->id)->likes->count()
+            ]);
+        }
     }
 
     /**

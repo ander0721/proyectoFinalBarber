@@ -72,11 +72,12 @@ class ServicioController extends Controller
         $servicio = Servicio::updateOrCreate(['idS' => $request->servicio_id]);
         $servicio->nombreS = $request->input("nombreS");
         $servicio->precio = $request->input("precio");
-        $servicio->save();
         $servicio->asignarBarberia($barberia);
+        $servicio->save();
+
       
    
-        return response()->json();
+        return response()->json(['success'=>'Item saved successfully.']);
     }
 
 

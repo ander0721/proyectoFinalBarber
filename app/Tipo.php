@@ -12,7 +12,7 @@ class Tipo extends Model
 
     protected $fillable = ['nombreT'];
 
-    public function producto(){
+    public function productos(){
         return $this->hasMany('App\Producto', 'idP');
     }
 }

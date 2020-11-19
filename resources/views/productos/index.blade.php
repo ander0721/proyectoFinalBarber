@@ -41,10 +41,37 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                     <th>Nombre</th>
                     <th width="1px">Precio</th>
                     <th width="1px">Marca</th>
+                    <th width="1px">barberia</th>
                     <th width="1px">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+
+
+                 <tbody>
+
+                @foreach ($data as $data)
+        <tr>
+            <td>{{ $data->idP }}</td>
+            <td>{{ $data->nombreP }}</td>
+            <td>{{ $data->precioP }}</td>
+            <td>{{ $data->marca->nombreM }}</td>
+            <td>{{ $data->barberias->flatten()->pluck('nombreB') }}</td>
+
+
+        <td>
+           <form action="{{ route('producto.destroy', $data->idP) }}" method="POST">
+
+
+                <a class="btn btn-primary" href="{{ route('producto.edit',$data->idP) }}"><img src="https://img.icons8.com/ios/24/000000/edit.png" /></a>
+
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-danger"><img src="https://img.icons8.com/ios/24/000000/trash.png" /></button>
+            </form> 
+        </td>
+    </tr>
+    @endforeach
                 </tbody>
             </table>
         </div>
@@ -82,6 +109,13 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                         <input id="nombreT" name="nombreT" type="text" placeholder="Ingrese el tipo de producto" class="form-control input-md">
                                 </div>
 
+                                <h6>Barberia</h6>   
+                     <select name="nombreB" class="form-control form-control-lg">
+                        <option >Selecione barberia</option>
+                        @foreach ($barberias as $barberia)
+                        <option id="nombreB" value="{{$barberia->nombreB}}">{{$barberia->nombreB}}</option>  
+                        @endforeach
+                    </select>
 
                             <div class="col-sm-offset-2 col-sm-10">
                              <button type="submit" class="btn btn-guardar btn-sm" id="saveBtn" value="create">Guardar
@@ -109,43 +143,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           }
     });
 
-    var table = $('.data-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('producto.index') }}",
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'nombreP', name: 'nombreP'},
-            {data: 'precioP', name: 'precioP'},
-            {data: 'marca', name: 'marca'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-
-        language: {
-          sProcessing: "Procesando...",
-          sLengthMenu: "Mostrar _MENU_ objetos",
-          sZeroRecords: "No se encontraron objetos similares",
-          sEmptyTable: "No se encontraron objetos similares",
-          sInfo: "Mostrando objetos del _START_ al _END_ de un total de _TOTAL_ objetos",
-          sInfoEmpty: "Mostrando objetos del 0 al 0 de un total de 0 objetos",
-          sInfoFiltered: "(filtrado de un total de _MAX_ objetos)",
-          sInfoPostFix: "",
-          sSearch: "Buscar:",
-          sUrl: "",
-          sInfoThousands: ",",
-          sLoadingRecords: "Cargando...",
-          oPaginate: {
-            sFirst: "Primero",
-            sLast: "Último",
-            sNext: "Siguiente",
-            sPrevious: "Anterior"
-          },
-          oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-          }
-            }
-    });
+    
 
     $('#createNewItem').click(function () {
         $('#saveBtn').val("Agregar producto");
@@ -175,6 +173,8 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           $('#precioP').val(data.precioP);
           $('#nombreM').val(data.nombreM);
           $('#nombreT').val(data.nombreT);
+          $('#nombreB').val(data.nombreB);
+
 
       })
 
@@ -195,7 +195,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
               $('#ItemForm').trigger("reset");
               $('#ajaxModel').modal('hide');
-              table.draw();
+              window.location.replace("producto");
 
           },
           error: function (data) {

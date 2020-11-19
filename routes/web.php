@@ -52,9 +52,27 @@ Route::resource('barberia', 'BarberiaController');
 Route::resource('comentarios', 'ComentarioController');
 
 
+Route::get('/post', 'PostController@index');
+Route::post('/like', 'PostController@like')->name('posts.like');
 
+Route::post('/like', 'ComentarioController@like')->name('comentario.like');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
+
+Route::get('cliente', function () {
+
+    $barberia = App\Barberia::all();
+    $marcas = App\Marca::all();
+    $productos = App\Producto::find(10);
+    $comentarios = App\Comentario::all();
+    return view('cliente.index')
+    ->with('barberia',$barberia)
+    ->with('marcas',$marcas)
+    ->with('productos',$productos)
+    ->with('comentarios',$comentarios);
+})->name('cliente');

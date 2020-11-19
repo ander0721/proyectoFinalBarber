@@ -12,28 +12,26 @@ class Producto extends Model
 
     protected $fillable = ['nombreP','precioP', 'tipo_id', 'marca_id'];
 
+   
     public function barberias()
     {
-        return $this->belongsToMany('App\Barberia','barberia_producto', 'producto_idP');
-    }
-   
-
-    public function tipos()
-    {
-        return $this->belongsToMany('App\Tipo', 'idT');
+        return $this->belongsToMany('App\Barberia','deta_b_p', 'producto_idP');
     }
 
     public function asignarBarberia($barberia){ 
         
         $this->barberias()->attach($barberia);
-   }
-
-    public function asignarTipo($tipo){ 
-
-        $this->tipos()->sync($tipo,false);
     }
+   
+
+    public function tipo()
+    {
+        return $this->belongsTo('App\Tipo', 'tipo_id');
+    }
+
     
-    public function marcas(){
-        return $this->belongsTo('App\Marca', 'idM');
+    public function marca(){
+        
+        return $this->belongsTo('App\Marca', 'idP');
     }
 }

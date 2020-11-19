@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Comentario','idC');
     }
+
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
+    }
 }

@@ -39,20 +39,48 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
             </div>
          </div>
          <div class="card-body">
-           <table class="table table-bordered data-table">
+           <table class="table table-hover">
                 <thead>
                     <tr>
-                    <th>ID</th>
+                    <th class="table-danger">ID</th>
                     <th>Nombre</th>
-
                     <th>Dirección</th>
                     <th>Propietario</th>
                     <th>Teléfono</th>
                     <th>Horario</th>
+                    <th>servicio</th>
                     <th width="1px">Acciones</th>
                     </tr>
                 </thead>
+
+
                 <tbody>
+
+                @foreach ($barberia as $barberia)
+        <tr>
+            <td>{{ $barberia->idB }}</td>
+            <td>{{ $barberia->nombreB }}</td>
+            <td>{{ $barberia->direccion }}</td>
+            <td>{{ $barberia->propietario }}</td>
+            <td>{{ $barberia->telefono }}</td>
+            <td>{{ $barberia->horario }}</td>
+            <td>{{ $barberia->servicios->flatten()->pluck('nombreS')}}</td>
+
+
+        <td>
+           <form action="{{ route('barberias.destroy', $barberia->idB) }}" method="POST">
+
+
+                <a class="btn btn-primary" href="{{ route('barberias.edit',$barberia->idB) }}"><img src="https://img.icons8.com/ios/24/000000/edit.png" /></a>
+
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-danger"><img src="https://img.icons8.com/ios/24/000000/trash.png" /></button>
+            </form> 
+        </td>
+    </tr>
+    @endforeach
                 </tbody>
             </table>
         </div>
@@ -129,45 +157,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           }
     });
 
-    var table = $('.data-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('barberias.index') }}",
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'nombreB', name: 'nombreB'},
-            {data: 'direccion', name: 'direccion'},
-            {data: 'propietario', name: 'propietario'},
-            {data: 'telefono', name: 'telefono'},
-            {data: 'horario', name: 'horario'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-
-        language: {
-          sProcessing: "Procesando...",
-          sLengthMenu: "Mostrar _MENU_ objetos",
-          sZeroRecords: "No se encontraron objetos similares",
-          sEmptyTable: "No se encontraron objetos similares",
-          sInfo: "Mostrando objetos del _START_ al _END_ de un total de _TOTAL_ objetos",
-          sInfoEmpty: "Mostrando objetos del 0 al 0 de un total de 0 objetos",
-          sInfoFiltered: "(filtrado de un total de _MAX_ objetos)",
-          sInfoPostFix: "",
-          sSearch: "Buscar:",
-          sUrl: "",
-          sInfoThousands: ",",
-          sLoadingRecords: "Cargando...",
-          oPaginate: {
-            sFirst: "Primero",
-            sLast: "Último",
-            sNext: "Siguiente",
-            sPrevious: "Anterior"
-          },
-          oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-          }
-            }
-    });
+   
 
     $('#createNewItem').click(function () {
         $('#saveBtn').val("Crear barberia");
@@ -215,10 +205,12 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           type: "POST",
           dataType: 'json',
           success: function (data) {
+            e.preventDefault()
 
               $('#ItemForm').trigger("reset");
               $('#ajaxModel').modal('hide');
-              table.draw();
+             window.location.replace("barberias");
+              
 
           },
           error: function (data) {

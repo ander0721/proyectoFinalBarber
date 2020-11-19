@@ -29,21 +29,19 @@
     <tr>
         <th>ID</th>
         <th>nombre</th>
-        <th>latitud</th>
-        <th>longitud</th>
         <th>direccion</th>
+        <th>servicio</th>
         <th>propietario</th>
         <th>telefono</th>
         <th>horario</th>
         <th>Acciones</th>
     </tr>
-    @foreach ($barberias as $barberia)
+    @foreach ($barberia as $barberia)
         <tr>
             <td>{{ $barberia->idB }}</td>
             <td>{{ $barberia->nombreB }}</td>
-            <td>{{ $barberia->latitud }}</td>
-            <td>{{ $barberia->longitud }}</td>
             <td>{{ $barberia->direccion }}</td>
+            <td>{{ $barberia->servicios->nombreS }}</td>
             <td>{{ $barberia->propietario }}</td>
             <td>{{ $barberia->telefono }}</td>
             <td>{{ $barberia->horario }}</td>
@@ -63,7 +61,6 @@
     </tr>
     @endforeach
 </table>
-<div class="links"> {{ $barberias->links() }} </div>
 </div>
 @endsection
 @endsection

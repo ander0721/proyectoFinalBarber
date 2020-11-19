@@ -22,14 +22,14 @@ class Barberia extends Model
         'user_id'
     ];
 
-    public function servicio(){
-        //relacion 1 a muchos
-        return $this->hasMany("App\Servicio", 'idS');
+    public function users()
+    {
+        return $this->belongsTo('App\User','user_id');
     }
 
     public function productos()
     {
-        return $this->belongsToMany('App\Producto','barberia_producto','barberia_idB');
+        return $this->belongsToMany('App\Producto','deta_b_p', 'barberia_idB');
     }
     public function asignarProducto($producto){ 
         $this->productos()->attach($producto);
