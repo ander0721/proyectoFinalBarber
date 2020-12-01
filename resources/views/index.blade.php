@@ -56,7 +56,7 @@
                                 <li class="nav-item">
                                     
 
-                                @can('administrador')
+                                @can('administrador' and 'moderador')
                                 <li class="nav-item">
                                     <a class="nav-link"
                                     href="{{ route('Pagadmin') }}">Administracion</a>
@@ -775,6 +775,7 @@
                     </div>
                 </div>
         </section>
+        
 
 
 

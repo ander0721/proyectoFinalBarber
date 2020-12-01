@@ -41,11 +41,36 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
                 <tr>
                     <th>Id</th>
                     <th>Nombre servicio</th>
-                 
+                    <th>barberia</th>
+                    @can('administrador')
                     <th width="2px">Acciones</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>
+
+                @foreach ($servicio as $data)
+        <tr>
+            <td>{{ $data->idS }}</td>
+            <td>{{ $data->nombreS }}</td>
+            <td>{{ $data->barberias->flatten()->pluck('nombreB') }}</td>
+
+        <td>
+           <form action="{{ route('servicio.destroy', $data->idS) }}" method="POST">
+
+           @can('administrador') 
+
+                <a class="btn btn-primary" href="{{ route('servicio.edit',$data->idS) }}"><img src="https://img.icons8.com/ios/24/000000/edit.png" /></a>
+
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-danger"><img src="https://img.icons8.com/ios/24/000000/trash.png" /></button>
+            @endcan
+            </form> 
+        </td>
+    </tr>
+    @endforeach
                 </tbody>
             </table>
         </div>
@@ -107,41 +132,7 @@ style=" fill:#fffffff;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-
           }
     });
 
-    var table = $('.data-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('servicio.index') }}",
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'nombreS', name: 'nombreS'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-
-        language: {
-          sProcessing: "Procesando...",
-          sLengthMenu: "Mostrar _MENU_ objetos",
-          sZeroRecords: "No se encontraron objetos similares",
-          sEmptyTable: "No se encontraron objetos similares",
-          sInfo: "Mostrando objetos del _START_ al _END_ de un total de _TOTAL_ objetos",
-          sInfoEmpty: "Mostrando objetos del 0 al 0 de un total de 0 objetos",
-          sInfoFiltered: "(filtrado de un total de _MAX_ objetos)",
-          sInfoPostFix: "",
-          sSearch: "Buscar:",
-          sUrl: "",
-          sInfoThousands: ",",
-          sLoadingRecords: "Cargando...",
-          oPaginate: {
-            sFirst: "Primero",
-            sLast: "Último",
-            sNext: "Siguiente",
-            sPrevious: "Anterior"
-          },
-          oAria: {
-            sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-            sSortDescending: ": Activar para ordenar la columna de manera descendente"
-          }
-            }
-    });
+   
 
     $('#createNewItem').click(function () {
         $('#saveBtn').val("Agregar servicio");

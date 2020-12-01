@@ -27,6 +27,19 @@ Route::get('catalogo', function () {
     return view('administrador.catalogos');
 });
 
+Route::get('clienteIndex', function () {
+    $barberia = App\Barberia::all();
+    $marcas = App\Marca::all();
+    $productos = App\Producto::find(10);
+    $comentarios = App\Comentario::all();
+    
+    return view('cliente.index')
+    ->with('barberia',$barberia)
+    ->with('marcas',$marcas)
+    ->with('productos',$productos)
+    ->with('comentarios',$comentarios);;
+});
+
 
 
 //SERVICIOS
@@ -64,15 +77,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::get('cliente', function () {
-
+Route::get('/cliente', function () {
     $barberia = App\Barberia::all();
     $marcas = App\Marca::all();
     $productos = App\Producto::find(10);
     $comentarios = App\Comentario::all();
-    return view('cliente.index')
+    return view('cliente.cliente')
     ->with('barberia',$barberia)
     ->with('marcas',$marcas)
     ->with('productos',$productos)
     ->with('comentarios',$comentarios);
-})->name('cliente');
+})->name('clienteasd');

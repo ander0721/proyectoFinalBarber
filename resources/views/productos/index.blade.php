@@ -42,25 +42,27 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                     <th width="1px">Precio</th>
                     <th width="1px">Marca</th>
                     <th width="1px">barberia</th>
+                    @can('administrador')
                     <th width="1px">Acciones</th>
+                    @endcan
                     </tr>
                 </thead>
 
 
                  <tbody>
 
-                @foreach ($data as $data)
+                @foreach ($producto as $data)
         <tr>
             <td>{{ $data->idP }}</td>
             <td>{{ $data->nombreP }}</td>
             <td>{{ $data->precioP }}</td>
-            <td>{{ $data->marca->nombreM }}</td>
+            <td>{{ $data->nombreP }}</td>
             <td>{{ $data->barberias->flatten()->pluck('nombreB') }}</td>
-
 
         <td>
            <form action="{{ route('producto.destroy', $data->idP) }}" method="POST">
 
+           @can('administrador') 
 
                 <a class="btn btn-primary" href="{{ route('producto.edit',$data->idP) }}"><img src="https://img.icons8.com/ios/24/000000/edit.png" /></a>
 
@@ -68,6 +70,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                 @method('DELETE')
 
                 <button type="submit" class="btn btn-danger"><img src="https://img.icons8.com/ios/24/000000/trash.png" /></button>
+            @endcan
             </form> 
         </td>
     </tr>

@@ -49,7 +49,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                     <th>Teléfono</th>
                     <th>Horario</th>
                     <th>servicio</th>
+                    @can('administrador') 
+
                     <th width="1px">Acciones</th>
+                    @endcan
                     </tr>
                 </thead>
 
@@ -70,13 +73,14 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
         <td>
            <form action="{{ route('barberias.destroy', $barberia->idB) }}" method="POST">
 
+           @can('administrador') 
 
                 <a class="btn btn-primary" href="{{ route('barberias.edit',$barberia->idB) }}"><img src="https://img.icons8.com/ios/24/000000/edit.png" /></a>
 
                 @csrf
                 @method('DELETE')
-
                 <button type="submit" class="btn btn-danger"><img src="https://img.icons8.com/ios/24/000000/trash.png" /></button>
+            @endcan
             </form> 
         </td>
     </tr>
@@ -91,7 +95,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                         <h4 class="modal-title" id="modelHeading"></h4>
                     </div>
                     <div class="modal-body">
-                        <form id="ItemForm" name="ItemForm" class="form-horizontal">
+                        <form id="ItemForm" name="ItemForm" class="form-horizontal" method="post" action="guarda.php" enctype="multipart/form-data">
                            <input type="hidden" name="barberia_id" id="barberia_id">
                             <div class="cf-container">
                                 <div class="cf-col-6">
@@ -103,6 +107,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                                 <h6>Latitud barbeía</h6>
                                     <input type="number" class="form-control" id="latitud" name="latitud" placeholder="Ingrese latitud de barberia" value="" maxlength="50" required="">
                                 </div>
+
 
                                 <div class="cf-col-6"><br>
                                     <h6>Longitud barberia</h6>
@@ -127,6 +132,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
                                 <div class="cf-col-6"><br>
                                     <h6>Horario barbería</h6>
                                     <input type="text" class="form-control" id="horario" name="horario" placeholder="Ingrese horario barberia" value="" maxlength="50" required="">
+                                </div>
+                                <div class="cf-col-6"><br>
+                                    <h6>seleccione imagen</h6>
+                                    <input id="img" name="img" type="file"/>
                                 </div>
 
                             </div>
@@ -189,6 +198,7 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           $('#propietario').val(data.propietario);
           $('#telefono').val(data.telefono);
           $('#horario').val(data.horario);
+          $('#fotos').val(data.fotos);
       })
 
 
@@ -205,7 +215,6 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           type: "POST",
           dataType: 'json',
           success: function (data) {
-            e.preventDefault()
 
               $('#ItemForm').trigger("reset");
               $('#ajaxModel').modal('hide');

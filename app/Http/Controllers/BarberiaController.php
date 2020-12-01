@@ -14,12 +14,14 @@ class BarberiaController extends Controller
     {
         if ($request->ajax()) {
             
-
-            $user_id = auth()->id();
-            $data = Barberia::all()->where('user_id', '=' ,$user_id );
+            $producto->barberias->flatten()->pluck('nombreB');
 
         }
-        $barberia = Barberia::all();
+        //$barberia = Barberia::all();
+        $user_id = auth()->id();
+
+        $barberia = Barberia::all()->where('user_id', '=' ,$user_id );
+
 
         return view('barberias.index')->with('barberia',$barberia);
     }
@@ -28,21 +30,35 @@ class BarberiaController extends Controller
     public function store(Request $request)
     {                                    
                                
-        $user = auth()->id();
 
-        $barberia = Barberia::updateOrCreate(['idB' => $request->barberia_id]);
-        $barberia->nombreB = $request->input("nombreB");
-        $barberia->latitud = $request->input("latitud");
-        $barberia->longitud = $request->input("longitud");
-        $barberia->direccion = $request->input("direccion");
-        $barberia->propietario = $request->input("propietario");
-        $barberia->telefono = $request->input("telefono");
-        $barberia->horario = $request->input("horario");
-       // $barberia->user_id = $user;
-        $barberia->save();
-        return response()->json(['success'=>'Item saved successfully.'])->
-        redirect()->route('barberias.index');
+       /*foreach ($peticion->file("fotos") as $foto) {
+          //  $barberia = $foto->store($this->store);
+            $barberia->fotos = $foto->store($this->store);
 
+
+        }*/
+        $barberia = Barberia::all()->where('propietario','=',$request->input("propietario"))->count();
+        if($barberia <= 2){
+            $user = auth()->id();
+
+            $barberia = Barberia::updateOrCreate(['idB' => $request->barberia_id]);
+            $barberia->nombreB = $request->input("nombreB");
+            $barberia->latitud = $request->input("latitud");
+            $barberia->longitud = $request->input("longitud");
+            $barberia->direccion = $request->input("direccion");
+            $barberia->propietario = $request->input("propietario");
+            $barberia->telefono = $request->input("telefono");
+            $barberia->horario = $request->input("horario");
+            $barberia->user_id = $user;
+            $barberia->save();
+
+            
+            return response()->json();
+
+        }else{
+       
+
+        }
  }
     
 

@@ -19,7 +19,8 @@ class Barberia extends Model
         'propietario',
         'telefono',
         'horario',
-        'user_id'
+        'user_id',
+        'fotos'
     ];
 
     public function users()

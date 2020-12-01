@@ -34,4 +34,9 @@ class Producto extends Model
         
         return $this->belongsTo('App\Marca', 'idP');
     }
+
+    public function tieneBarberia(){ 
+
+        return $this->barberias->flatten()->pluck('nombreB');
+   }
 }

@@ -19,13 +19,15 @@ class ProductoController extends Controller
             $data = Producto::all();
 
         }
+       
         
-        $data = Producto::all();
+        $producto = Producto::all();
+        $barberia = Barberia::all();
         $user_id = auth()->id();
         $barberias = Barberia::all()->where('user_id', '=' ,$user_id );
 
         return view('productos.index')
-        ->with('data',$data)
+        ->with('producto',$producto)
         ->with('barberias',$barberias);
     }
 
